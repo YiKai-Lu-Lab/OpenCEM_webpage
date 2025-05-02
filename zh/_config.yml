@@ -1,0 +1,28 @@
+title: OpenCEM Platform
+email: tinkosebastianbartels@link.cuhk.edu.cn
+description: >-
+  The Open In-Context Energy Management Platform (OpenCEM) at the Chinese University of Hongkong, Shenzhen aims to promote and enable in-context learning for prediction and decision models in renewable energy management through an open data set, simulator and public API.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+github_username: openCEM-platform
+
+theme: minima
+plugins:
+  - jekyll-feed
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: default
+  - scope:
+      path: "en"
+      type: "pages"
+    values:
+      lang: en
+  - scope:
+      path: "zh"
+      type: "pages"
+    values:
+      lang: zh

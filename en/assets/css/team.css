@@ -1,0 +1,99 @@
+.team-member {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.member-photo {
+    border: 2px solid rgba(255,255,255,0.15);
+    width: 200px;height: 200px;
+}
+
+.member-institution {
+    color: #b0b9c5;
+}
+
+.member-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-section {
+    flex: 1;
+    padding-top: 8px; 
+}
+
+.member-name {
+    color: #fff;
+    font-size: 1.8rem;
+    margin: 0 0 6px 0;
+    font-weight: 600;
+}
+
+.institution-line {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.member-institution {
+    color: #a0b3c6;
+    font-size: 1.1rem;
+}
+
+.member-role {
+    color: #00f3ff;
+    font-size: 1rem;
+    background: rgba(0, 243, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 4px;
+}
+
+.project-description {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-item {
+    color: #d1dae3;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    position: relative;
+    padding-left: 20px;
+}
+
+.project-item::before {
+    content: "▹";
+    color: #00f3ff;
+    position: absolute;
+    left: 0;
+}
+
+@media (max-width: 768px) {
+    .team-member {
+        flex-direction: column;
+        align-items: center;
+    }
+    .profile-section {
+        width: 100%;
+    }
+    .institution-line {
+        flex-wrap: wrap;
+    }
+}
+h1{
+    font-size: 40px;
+    margin: 10px 0 40px;
+    position: relative;
+    top: -10px;
+}

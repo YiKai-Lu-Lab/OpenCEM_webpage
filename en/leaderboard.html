@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenCEM - Context Leaderboard</title>
+    <style>
+       :root {
+            --bg-color: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --accent-color: #7f5af0;
+            --text-primary: #ffffff;
+            --button-hover: #6c4acf;
+        }
+
+        .reward-notice {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1.2rem;
+            background: rgba(127, 90, 240, 0.1);
+            border-radius: 8px;
+            border: 1px solid var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .reward-notice span {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .leaderboard {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transform: translateY(0);
+            opacity: 1;
+            animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .demo-button:hover {
+            background: var(--button-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(127, 90, 240, 0.4);
+        }
+
+        .demo-button {
+            display: block;
+            width: 200px;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(127, 90, 240, 0.3);
+        }
+
+        @keyframes cardEntrance {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 2rem;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #7f5af0, #2ec4b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        thead {
+            background: linear-gradient(90deg, #2a2a2a 0%, #1f1f1f 100%);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            position: relative;
+        }
+
+        th:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: var(--accent-color);
+            opacity: 0.3;
+        }
+
+        td {
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s ease;
+        }
+
+        tr {
+            opacity: 0;
+            animation: rowEntrance 0.4s ease forwards;
+        }
+
+        @keyframes rowEntrance {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.03);
+            transform: scale(1.02);
+        }
+
+        .rank {
+            width: 80px;
+            text-align: center;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .rank:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+
+            border-radius: 8px;
+        }
+
+        tr:nth-child(1) .rank:before {
+            background: var(--rank-gold);
+        }
+
+        tr:nth-child(2) .rank:before {
+            background: var(--rank-silver);
+        }
+
+        tr:nth-child(3) .rank:before {
+            background: var(--rank-bronze);
+        }
+
+        .rank span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .player-id {
+            max-width: 400px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .score {
+            width: 150px;
+            text-align: right;
+            font-family: 'Fira Code', monospace;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* First three players */
+        tr:nth-child(1) {
+            background: linear-gradient(90deg, rgba(255,215,0,0.08) 0%, transparent 100%);
+        }
+
+        tr:nth-child(2) {
+            background: linear-gradient(90deg, rgba(192,192,192,0.05) 0%, transparent 100%);
+        }
+
+        tr:nth-child(3) {
+            background: linear-gradient(90deg, rgba(205,127,50,0.05) 0%, transparent 100%);
+        }
+
+        /* back to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-color);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(127,90,240,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .leaderboard { border-radius: 12px; padding: 1rem; }
+            th, td { padding: 0.8rem; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="leaderboard">
+        <h1>Highest scorers of context</h1>
+        <div class="reward-notice">
+            Top 10 players can get rewards of: 
+            <span>100rmb</span>
+        </div>
+
+        <a href="/demo.html" class="demo-button">
+            Launch Demo to play!
+        </a>
+
+        <table id="leaderboard-table">
+            <thead>
+                <tr>
+                    <th class="rank">rank</th>
+                    <th class="player-id">User ID</th>
+                    <th class="score">Score</th>
+                </tr>
+            </thead>
+
+            <tbody id="leaderboard-body">
+                <!-- fill the data -->
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+    <script>
+        // data generation
+        function generateMockData(count) {
+            return Array.from({ length: count }, (_, i) => ({
+                rank: i + 1,
+                id: ` ${['user1','user2','user3','user4'][i%4]}${['#1','#2','#3','#4'][i%4]}${i.toString(16)}`,
+                score: 10000 - (i * 50) + Math.floor(Math.random() * 200)
+            })).sort((a, b) => b.score - a.score);
+        }
+
+        function createRow(player, index) {
+            const row = document.createElement('tr');
+            row.style.animationDelay = `${index * 0.05}s`;
+            row.innerHTML = `
+                <td class="rank"><span>#${index + 1}</span></td>
+                <td class="player-id">${player.id}</td>
+                <td class="score">${player.score.toLocaleString()}</td>
+            `;
+            if (index < 10) {
+                const star = document.createElement('span');
+                star.innerHTML = '🌟';
+                star.style.marginLeft = '8px';
+                row.querySelector('.player-id').appendChild(star);
+            }
+ 
+            
+            if (index < 3) {
+                const trophy = document.createElement('span');
+                trophy.style.marginLeft = '8px';
+                trophy.innerHTML = ['🏆', '🥈', '🥉'][index];
+                row.querySelector('.rank').appendChild(trophy);
+            }
+            
+            return row;
+        }
+
+        function populateLeaderboard() {
+            const tbody = document.getElementById('leaderboard-body');
+            const players = generateMockData(100);
+            
+            players.forEach((player, index) => {
+                tbody.appendChild(createRow(player, index));
+            });
+        }
+
+        // flow
+        window.addEventListener('scroll', () => {
+            const btn = document.querySelector('.scroll-top');
+            btn.style.display = window.scrollY > 500 ? 'flex' : 'none';
+        });
+
+        // initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            populateLeaderboard();
+            
+            // family
+            const fontLink = document.createElement('link');
+            fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap';
+            document.head.appendChild(fontLink);
+        });
+    </script>
+</body>
+</html>

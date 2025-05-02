@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/team.css">
+</head>
+<body>
+    <div class="site-bg"></div>
+    
+    {% include navigation.html %}
+    
+    <div class="main-content">
+        <h1>{{ page.title }}</h1>
+        <p class="tagline">{{ page.subtitle }}</p>
+        {% for member in site.data.team %}
+            <div class="team-member">
+                <div class="member-photo">
+                    <img src="/assets/images/team/{{ member.photo }}">
+                </div>
+                <div class="profile-section">
+                    <!-- info -->
+                    <h3 class="member-name">{{ member.name }}</h3>
+                    <div class="institution-line">
+                        <span class="member-institution">{{ member.affiliation }}</span>
+                    </div>
+                    <div class="project-description">
+                        <div class="project-item">
+                            {{ member.background }}
+                        </div>
+                        <div class="project-item">
+                            研究领域: {{ member.research_field }}
+                        </div>
+                        <div class="project-item">
+                            电子邮件: <a href="mailto:{{ member.email }}">{{ member.email }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

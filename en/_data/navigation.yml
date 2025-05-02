@@ -1,0 +1,12 @@
+- name: Home
+  link: /
+- name: Introduction
+  link: /introduction.html
+- name: Research
+  link: /research.html
+- name: Our Team
+  link: /team.html
+- name: Demo
+  link: /demo.html
+- name: Contact Us
+  link: /contact.html
